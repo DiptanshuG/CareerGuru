@@ -1,15 +1,21 @@
 import React from "react";
 import { FaUser, FaLock } from "react-icons/fa";
+import logo from "../assets/images/transparent-logo.png";
 
 const Login = () => {
   return (
     <div className="flex flex-col md:flex-row h-screen">
       {/* Left Section */}
-      <div className="md:w-1/2 bg-blue-500 text-white p-10 flex items-center justify-center">
+      <div className="md:w-1/2 bg-orange-500 text-white p-10 flex items-center justify-center">
         <div>
+          {/* Logo Image */}
+          <img src={logo} alt="Logo" className="mx-auto mb-6 w-50 h-50" />
+
           <h1 className="text-4xl font-bold mb-6">Welcome Back!</h1>
+
           <p className="text-lg">
-            Login to your account to access our amazing features.
+            Choose a job you love, and you will never have to work a day in your
+            life.{" "}
           </p>
         </div>
       </div>
@@ -63,7 +69,7 @@ const Login = () => {
             <div className="text-sm">
               <a
                 href="#"
-                className="font-medium text-blue-600 hover:text-blue-500"
+                className="font-medium text-orange-600 hover:text-orange-500"
               >
                 Forgot your password?
               </a>
@@ -72,7 +78,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="mt-4 w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-500"
+            className="mt-4 w-full bg-orange-600 text-white p-2 rounded-md hover:bg-orange-500"
           >
             Login
           </button>
@@ -82,7 +88,7 @@ const Login = () => {
               Don't have an account?
               <a
                 href="#"
-                className="font-medium text-blue-600 hover:text-blue-500 ml-1"
+                className="font-medium text-orange-600 hover:text-orange-500 ml-1"
               >
                 Register now
               </a>
