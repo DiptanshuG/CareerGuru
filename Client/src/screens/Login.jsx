@@ -1,21 +1,38 @@
 import React from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 import logo from "../assets/images/transparent-logo.png";
+import Footer from "../components/Footer";
 
 const Login = () => {
   return (
     <div className="flex flex-col md:flex-row h-screen">
       {/* Left Section */}
-      <div className="md:w-1/2 bg-orange-500 text-white p-10 flex items-center justify-center">
+      <div className=" bg-orange-500 text-white p-10 flex items-center justify-center block md:hidden">
+        <div>
+          {/* Logo Image */}
+          <img src={logo} alt="Logo" className="  w-30 h-25" />
+
+          <h1 className="text-4xl font-bold mb-6 hidden md:block">
+            Welcome Back!
+          </h1>
+          <p className="text-lg hidden md:block">
+            Choose a job you love, and you will never have to work a day in your
+            life.
+          </p>
+        </div>
+      </div>
+      <div className="md:w-1/2 bg-orange-500 text-white p-10 flex items-center justify-center hidden md:block">
         <div>
           {/* Logo Image */}
           <img src={logo} alt="Logo" className="mx-auto mb-6 w-50 h-50" />
 
-          <h1 className="text-4xl font-bold mb-6">Welcome Back!</h1>
-
-          <p className="text-lg">
+          {/* Hide below 720px width */}
+          <h1 className="text-4xl font-bold mb-6 hidden md:block">
+            Welcome Back!
+          </h1>
+          <p className="text-lg hidden md:block">
             Choose a job you love, and you will never have to work a day in your
-            life.{" "}
+            life.
           </p>
         </div>
       </div>
@@ -96,6 +113,9 @@ const Login = () => {
           </div>
         </form>
       </div>
+
+      {/* footer */}
+      <Footer  />
     </div>
   );
 };
