@@ -4,7 +4,6 @@ import { TailSpin } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-
 const Register = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -26,34 +25,33 @@ const Register = () => {
   const navigate = useNavigate(); // Add this line to use the navigate function
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/user/signup`,
-      formData
-    );
-    setLoading(false);
-console.log({response})
-    const data = response.data;
-    toast.success(`${data.message}`);
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/user/signup`,
+        formData
+      );
+      setLoading(false);
+      console.log({ response });
+      const data = response.data;
+      toast.success(`${data.message}`);
 
-    // Navigate to VerifyOTP component with the email prop
-    if (data.success) {
-      navigate("/verify", { state: { email: formData.email } });
+      // Navigate to VerifyOTP component with the email prop
+      if (data.message) {
+        navigate("/verify", { state: { email: formData.email } });
+      }
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+
+      if (error.response && error.response.status === 404) {
+        toast.error("API endpoint not found. Please check your server configuration.");
+      } else {
+        toast.error("Registration failed. Please try again.");
+      }
     }
-  } catch (error) {
-    setLoading(false);
-    console.error(error);
-
-    if (error.response && error.response.status === 404) {
-      toast.error("API endpoint not found. Please check your server configuration.");
-    } else {
-      toast.error("Registration failed. Please try again.");
-    }
-  }
-};
-
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -207,5 +205,6 @@ console.log({response})
     </div>
   );
 };
+
 
 export default Register;

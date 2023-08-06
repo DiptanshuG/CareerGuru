@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
+import {  toast } from "react-toastify";
 
-const VerifyOTP = ({ email }) => {
+
+const VerifyOTP = () => {
   const [otp, setOtp] = useState('');
+  const location = useLocation();
+  const { email } = location.state;
 
   const handleChange = (e) => {
     setOtp(e.target.value);
@@ -16,7 +21,7 @@ const VerifyOTP = ({ email }) => {
         otp: otp,
       });
       console.log(response.data); // Handle the response as needed
-      // Perform any action after successful verification
+      toast.success(`user verified successfully`);
     } catch (error) {
       console.error(error);
       // Handle any error during verification
