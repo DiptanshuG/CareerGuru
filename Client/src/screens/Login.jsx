@@ -2,8 +2,11 @@ import React from "react";
 import { FaUser, FaLock } from "react-icons/fa";
 import logo from "../assets/images/transparent-logo.png";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col md:flex-row h-screen">
       {/* Left Section */}
@@ -103,12 +106,12 @@ const Login = () => {
           <div className="text-center mt-4">
             <p className="text-sm">
               Don't have an account?
-              <a
-                href="#"
-                className="font-medium text-orange-600 hover:text-orange-500 ml-1"
+              <button
+              onClick={()=>navigate('/register')}
+              className="font-medium text-orange-600 hover:text-orange-500 ml-1"
               >
                 Register now
-              </a>
+              </button>
             </p>
           </div>
         </form>
