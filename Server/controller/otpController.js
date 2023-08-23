@@ -8,21 +8,24 @@ const transporter = nodemailer.createTransport({
     port : 465,
     secure : true,
     auth : {
-        user : process.env.AUTH_EMAIL,
-        pass : process.env.AUTH_PASS,
-    }
+        user : "choudharyc355@gmail.com",
+        pass : "aeeaypyedgpapxhh", 
+    },tls: {
+        rejectUnauthorized: false, // Temporary setting for troubleshooting
+    },
 })
 
 transporter.verify((error,success) => {
     if(error){
+        console.log("Failed");
         console.log(error.message);
     }else{
-        console.log("Ready to send OTP.");
         console.log(success);
+        console.log("Ready to send message.")
     }
 })
 
-const sendotp = async ({email}, res) => {
+const sendotp = async (email, res) => {
     try{
         const otp = `${Math.floor(1000+Math.random()*9000)}`;
         const mailOptions = {

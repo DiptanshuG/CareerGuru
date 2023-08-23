@@ -12,5 +12,5 @@ const otpSchema = mongoose.Schema({
     createdAt : Date,
     expiredAt : Date
 })
-
+ 
 exports.OTP = mongoose.model('OTP',otpSchema);

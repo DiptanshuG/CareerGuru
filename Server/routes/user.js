@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const {getUser,getUserById,signUp,userUpdate,userDelete,forgetPassword,verify} = require("../controller/userController");
+const {getUser,getUserById,signup,userUpdate,userDelete,verify,resendOtp,signin,logout,getProfile} = require("../controller/userController");
+const {recover,changepassword,resend} = require("../controller/passwordchangeController");
+const auth = require("../middlewear/auth")
 
 const multer = require("multer");
 const path = require("path");
@@ -53,17 +55,22 @@ const filefilter = (req,file,cb) => {
     }
 }
 
-const maxSize = 1*1024*1024;
-const uploadOptions = multer({storage : storage,fileFilter : filefilter,limits : {fileSize : maxSize}}).fields([
+const uploadOptions = multer({storage : storage,fileFilter : filefilter}).fields([
     {name : "profile" , maxCount : 1}, {name : "resume",maxCount : 1}
 ]);
 
-router.get("/",getUser);
-router.get("/:id", getUserById);
-router.post("/signUp",signUpVal,signUp); 
-router.put("/update/:id",uploadOptions,uploadVal,userUpdate);
-router.delete("/:id",userDelete);
-router.put("/forget/password/:id",forgetPassword);
+router.get("/",auth,getUser);
+router.get("/:id",auth,getUserById);
+router.post("/signup",signUpVal,signup); 
+router.put("/update/:id",uploadOptions,uploadVal,auth,userUpdate);
+router.delete("/:id",auth,userDelete);
 router.post("/verify/otp",verify);
+router.post("/verify/resend",resendOtp);
+router.post("/recover",recover);
+router.post("/changepassword",changepassword);
+router.post("/changepassword/resend",resend);
+router.post("/login",signin)
+router.get("/logout",auth,logout);
+router.get("/profile/:id",auth,getProfile);
 
 module.exports = router;

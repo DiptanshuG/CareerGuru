@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+require("dotenv").config();
 
 const userSchema = mongoose.Schema({
     profile : {
@@ -25,9 +28,13 @@ const userSchema = mongoose.Schema({
     position : {
         type : String,
     },
-    workStatus : {
+    experience : {
         type : String,
         default : "Fresher",
+    },
+    companyName : {
+        type : String,
+        default : '',
     },
     resume : {
         type : String,
@@ -39,7 +46,39 @@ const userSchema = mongoose.Schema({
     verified : {
         type : Boolean,
         default : false
+    },
+    isAdmin : {
+        type : Boolean,
+        default : false,
+    },
+    tokens : [{
+        token : {
+            type : String,
+            required : true,
+        }
+    }]
+},{
+    versionKey : false,
+})
+
+// generating token
+userSchema.methods.generateAuthToken = async function(){
+    try{
+        const token = jwt.sign({_id:this._id.toString()},process.env.SECRET_KEY);
+        this.tokens = this.tokens.concat({token});
+        await this.save();
+        return token;
+    }catch(error){
+        console.log(error.message);
+        return res.send(error.message);
     }
+}
+
+userSchema.pre("save",async function(next){
+    if(this.isModified("password")){
+        this.password = await bcrypt.hash(this.password,10);
+    }
+    next();
 })
 
 userSchema.virtual('id').get(function (){
